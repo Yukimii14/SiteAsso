@@ -72,37 +72,26 @@
                             <span><a href="spotify" class="m-link"><i class="fab fa-spotify"></i></a></span>
                             </button>
                         
-                                @guest
-                                        @if (Route::has('login'))
-                                            <button class="button is-link">
-                                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                            </button>
-                                        @endif
-                                        
-                                        @if (Route::has('register'))
-                                            <button class="button is-link">
-                                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                            </button>
-                                        @endif
-                                    @else
-                                        <li class="nav-item dropdown">
-                                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                                {{ Auth::user()->name }}
-                                            </a>
-
-                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                                onclick="event.preventDefault();
-                                                                document.getElementById('logout-form').submit();">
-                                                    {{ __('Logout') }}
-                                                </a>
-
-                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                                    @csrf
-                                                </form>
-                                            </div>
-                                        </li>
-                                @endguest
+                            @auth
+                            <li>
+                                <a href="" class="p-3">{{ auth()->user()->name }}</a>
+                            </li>
+                            <li>
+                                <form action="{{ route('logout') }}" method="post" class="p-3 inline">
+                                    @csrf
+                                    <button type = "submit">Logout</button>
+                                </form>
+                            </li>
+                        @endauth
+                        
+                        @guest
+                            <li>
+                                <a href="{{ route('register') }} " class="p-3">Register</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('login') }}" class="p-3">Login</a>
+                            </li>
+                        @endguest
                         <a class="navbar-brand" href="{{ url('/') }}">
                             {{ config('app.name', 'Associationname') }}
                         </a>

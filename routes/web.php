@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,28 +28,24 @@ Route::get('/','App\Http\Controllers\PagesController@home');
 Route::get('/test','App\Http\Controllers\PagesController@index');
 
 Route::get('/about','App\Http\Controllers\PagesController@about');
+Route::post('/logout',[LogoutController::class,'store'])->name('logout');
 
-Route::get('/hello', function () {
-    
-    return '<h1>hello world</h1>';
- });
+Route::get('/login',[LoginController::class,'index'])->name('login');
+Route::post('/login',[LoginController::class,'store']);
+
+Route::get('/register',[RegisterController::class,'index'])->name('register');
+Route::post('/register',[RegisterController::class,'store']);
 
  Route::get('/about', function () {
     
     return view('pages/about') ;
  });
 
- Route::get('/users/{id}', function ($id) {
-    
-    return 'this is a user' . ($id) ;
- });
-Auth::routes();
+
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 Route::resource('/podcasts', 'App\Http\Controllers\PodcastsController');
